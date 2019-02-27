@@ -1,0 +1,12 @@
+categories:
+  - Variant Analysis
+description: Mycobacterial speciation of VCF or FASTA files aligned to NC000962 (H37rV).
+homepage_url: https://github.com/samlipworth/snpit
+long_description: |
+  Whole genome SNP based identification of members of the Mycobacterium tuberculosis complex. 
+  Based on code originally written by Samuel Lipworth and turned into a package by Philip Fowler.
+  SNP-IT allows rapid Mycobacterial speciation of VCF or FASTA files aligned to NC000962 (H37rV).
+name: mtb-snp-it
+owner: sanbi-uwc
+remote_repository_url: https://github.com/samlipworth/snpit
+type: unrestricted

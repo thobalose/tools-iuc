@@ -1,0 +1,43 @@
+<tool id="mtb-snp-it" name="Mycobacterial speciation (SNP-IT)" version="0.1.0">
+    <requirements>
+        <requirement type="package" version="1.1">mtb-snp-it</requirement>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+        ln -s "${input}" $input.element_identifier &&
+        #set snpit_output = os.path.splitext(os.path.basename($input.element_identifier))[0] + '.tab'
+        snpit-run.py --input $input.element_identifier | tee $snpit_output &&
+        mv $snpit_output $output
+    ]]>    </command>
+    <inputs>
+        <param type="data" name="input" format="vcf,fasta,fasta.gz" label="Input" />
+    </inputs>
+    <outputs>
+        <data name="output" format="tabular" label="${tool.name} Output" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="input" value="example.vcf" ftype='vcf' />
+            <output name="output" file="example.tab" ftype="tabular" />
+        </test>
+    </tests>
+    <help><![CDATA[
+        usage: snpit-run.py [-h] --input INPUT
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --input INPUT  the path to the VCF or FASTA file to read and classify
+                 (either can be bzip2ed/gzipped)
+
+    ]]>    </help>
+    <citations>
+        <citation type="bibtex">
+@misc{githubsnpit,
+  author = {Lipworth, Samuel},
+  year = {2019},
+  title = {snpit},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/samlipworth/snpit},
+}</citation>
+    </citations>
+</tool>
