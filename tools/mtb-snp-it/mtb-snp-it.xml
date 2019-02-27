@@ -1,18 +1,20 @@
-<tool id="mtb-snp-it" name="Mycobacterial speciation (SNP-IT)" version="0.1.0">
+<tool id="mtb-snp-it" name="Mycobacterial lineage typing (SNP-IT)" version="@TOOL_VERSION@+galaxy0">
+    <description>SNP-IT allows rapid Mycobacterial speciation (lineage typing) of VCF or FASTA files aligned to NC000962 (H37Rv).</description>
+    <macros>
+        <token name="@TOOL_VERSION@">1.1</token>
+    </macros>
     <requirements>
-        <requirement type="package" version="1.1">mtb-snp-it</requirement>
+        <requirement type="package" version="@TOOL_VERSION@">mtb-snp-it</requirement>
     </requirements>
     <command detect_errors="exit_code"><![CDATA[
-        ln -s "${input}" $input.element_identifier &&
-        #set snpit_output = os.path.splitext(os.path.basename($input.element_identifier))[0] + '.tab'
-        snpit-run.py --input $input.element_identifier | tee $snpit_output &&
-        mv $snpit_output $output
-    ]]>    </command>
+        ln -s '${input}' '$input.element_identifier' &&
+        snpit-run.py --input '$input.element_identifier' | tee $output
+    ]]></command>
     <inputs>
-        <param type="data" name="input" format="vcf,fasta,fasta.gz" label="Input" />
+        <param type="data" argument="--input" format="vcf,vcf.gz,fasta,fasta.gz" label="M. tuberculosis variants" />
     </inputs>
     <outputs>
-        <data name="output" format="tabular" label="${tool.name} Output" />
+        <data name="output" format="tabular" label="${tool.name} lineage" />
     </outputs>
     <tests>
         <test>
@@ -21,23 +23,12 @@
         </test>
     </tests>
     <help><![CDATA[
-        usage: snpit-run.py [-h] --input INPUT
-
-optional arguments:
-  -h, --help     show this help message and exit
-  --input INPUT  the path to the VCF or FASTA file to read and classify
-                 (either can be bzip2ed/gzipped)
-
-    ]]>    </help>
+     SNP-IT processes variants in M. tuberculosis identified relative to the H37Rv reference genome
+     and uses these to identify the lineage of the associated sample. Input is either a VCF or FASTA file
+     containing variants. In the case of a FASTA file it needs to be the same length (i.e. coordinates) as
+     the H37Rv reference genome.
+    ]]></help>
     <citations>
-        <citation type="bibtex">
-@misc{githubsnpit,
-  author = {Lipworth, Samuel},
-  year = {2019},
-  title = {snpit},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  url = {https://github.com/samlipworth/snpit},
-}</citation>
+        <citation type="doi">10.3201/eid2503.180894</citation>
     </citations>
 </tool>
